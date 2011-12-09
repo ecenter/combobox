@@ -1,0 +1,5 @@
+name = Combobox
+package = Utilities
+description = Add combobox FAPI element
+core = 7.x
+

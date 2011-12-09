@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * Implementation of hook_theme().
+ */
+function combobox_theme() {
+  return array(
+    'combobox_element' => array(
+      'render element' => 'element',
+    ), 
+  );
+}
+
+/**
+ * Implementation of hook_elements().
+ */
+function combobox_element_info() {
+  return array(
+    'combobox' => array(
+      '#input' => TRUE,
+      '#size' => 0,
+      '#multiple' => FALSE,
+      '#attributes' => array('class' => array('form-combobox')),
+      '#theme' => 'combobox_element',
+    ),
+  );
+}
+
+/**
+ * Theme combobox element
+ *
+ * This acts as a wrapper to theme_select.  If you override the select theme to
+ * render as, say, checkboxes, you will probably break combobox unless you
+ * provide alternative rendering here.
+ */
+function theme_combobox_element($variables) {
+  drupal_add_library('system', 'ui');
+  drupal_add_library('system', 'ui.widget');
+  drupal_add_library('system', 'ui.mouse');
+  drupal_add_library('system', 'ui.button');
+  drupal_add_library('system', 'ui.position');
+  drupal_add_library('system', 'ui.autocomplete');
+
+  // A dummy settings array is required, otherwise Drupal's array_merge behavior
+  // while adding settings will mess up the data structure.
+  drupal_add_js(array('Combobox' => array(
+    $variables['element']['#id'] => array(
+      'id' => $variables['element']['#id'],
+    )
+  )), 'setting');
+
+  drupal_add_js(drupal_get_path('module', 'combobox') . '/js/combobox.js');
+  drupal_add_js(drupal_get_path('module', 'combobox') . '/js/combobox-behaviors.js');
+  
+  $variables['element']['#type'] = 'select';
+  $variables['element']['#theme'] = 'select';
+  return theme('select', $variables);
+}
+
+function combobox_init() {
+  drupal_add_library('system', 'ui');
+  drupal_add_library('system', 'ui.widget');
+  drupal_add_library('system', 'ui.mouse');
+  drupal_add_library('system', 'ui.button');
+  drupal_add_library('system', 'ui.position');
+  drupal_add_library('system', 'ui.autocomplete');
+  
+  drupal_add_js(drupal_get_path('module', 'combobox') . '/js/combobox.js');
+  drupal_add_js(drupal_get_path('module', 'combobox') . '/js/combobox-behaviors.js');
+
+}
