@@ -13,7 +13,7 @@
         .wrap('<div class="combobox-js-wrapper">')
         .parent();
       
-      var input = $( "<input>" )
+      var input = $( '<input type="text">' )
         .insertAfter( select )
         .val( value )
         .addClass( "ui-widget ui-widget-content ui-corner-left" );
